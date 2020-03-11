@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Text,ButtonGroup } from 'react-native-elements';
-
-export default class Header extends Component {
+import {Selection} from '../Redux/action'
+import {connect} from 'react-redux'
+class Header extends Component {
     constructor () {
         super()
         this.state = {
@@ -11,23 +12,24 @@ export default class Header extends Component {
       }
       
       updateIndex (selectedIndex) {
-        this.setState({selectedIndex})
+        this.setState({selectedIndex},() => this.props.index(selectedIndex))
       }
 
       
       render () {
         const buttons = ['Home', 'Messages', 'Profile']
         const { selectedIndex } = this.state
-        
+        // console.log("header",this.props)
         return (
           <ButtonGroup
             onPress={this.updateIndex}
             selectedIndex={selectedIndex}
             buttons={buttons}
-            containerStyle={{height: 100}}
+            containerStyle={{height: 50}}
           />
         )
       }
 }
+export default connect(null,{Selection})(Header);
 
 
