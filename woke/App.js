@@ -15,9 +15,20 @@ const store = createStore(reducer)
 
 
  class App extends Component {
+   componentDidMount() {
+     fetch("https://woke-api.herokuapp.com/users")
+     .then(r => r.json())
+     .then(resp => {
+       this.setState({
+         users:resp
+       }, (resp)=> console.log("app",resp))
+     })
+   }
+   
 
   state={
-    index:0
+    index:0,
+    users:[]
   }
 
   handleInput_from_nav = (index) => {
@@ -29,7 +40,7 @@ const store = createStore(reducer)
 
   handleRendering = () => {
     if(this.state.index === 0){
-      return <Home/>
+      return <Home users={this.state.users}/>
     } else if(this.state.index === 1){
       return <Messages/>
     } else if (this.state.index === 2){
